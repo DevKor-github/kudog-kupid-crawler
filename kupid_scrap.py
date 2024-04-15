@@ -12,7 +12,9 @@ import psycopg2
 import os
 from selenium.webdriver.common.keys import Keys
 from dotenv import load_dotenv
-
+from pyvirtualdisplay import Display
+display = Display(visible=0, size=(800, 600))
+display.start()
 load_dotenv()#.env 활용
 
 #속도 빠르게 하기 위한 headless, image disable, gpu disable 기능 등
@@ -195,7 +197,10 @@ for k in range(number_of_pages):#페이지 순회하며 탐색
            
 
 driver.quit()#스크랩 끝나면 누수 방지 위해 selenium 종료      
+
 os.system("taskkill /f /im chromedriver.exe /t")#크롬드라이버가 끝나도 꺼지지 않을 때를 대비하여 강제종료
+
+display.stop()
 
 cur.close()
 conn.close()#sql 종료
