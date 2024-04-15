@@ -107,6 +107,10 @@ for i in range(2):
 
                 driver.find_elements(By.CSS_SELECTOR, 'tr')[j+1].find_element(By.CSS_SELECTOR, 'a').send_keys(Keys.ENTER)
                 time.sleep(1)
+
+                # get Title
+                title = driver.find_element(By.XPATH, '/html/body/div/div[2]/form/table/tbody/tr[5]/td').text
+
                 article_content = driver.find_element(By.XPATH, '/html/body/div/div[2]/form/table/tbody/tr[6]').get_attribute('innerHTML')
                 article_content = article_content.replace("\'", "\'\'")
                 attatchments = driver.find_elements(By.XPATH, '/html/body/div/div[2]/form/table/tbody/tr[7]')
@@ -121,7 +125,7 @@ for i in range(2):
                     attatchments = attatchments.replace("\'", "\'\'")
                     article_content = article_content + "\n" + attatchments
                 #여기도 가독성 개선해볼 것...
-                cur.execute(f"insert into notice (id, title, content, writer, date, view, url) values ({article_id}, '{onearticle_datas[1]}', '{article_content}', '{onearticle_datas[2]}', '{onearticle_datas[3]}', {onearticle_datas[4]}, -1);")
+                cur.execute(f"insert into notice (id, title, content, writer, date, view, url) values ({article_id}, '{title}', '{article_content}', '{onearticle_datas[2]}', '{onearticle_datas[3]}', {onearticle_datas[4]}, -1);")
                 conn.commit()
                 time.sleep(0.5)
                 driver.find_element(By.XPATH, '/html/body/div/div[2]/div/input[3]').send_keys(Keys.ENTER)
@@ -158,6 +162,8 @@ for k in range(number_of_pages):#페이지 순회하며 탐색
 
             driver.find_elements(By.CSS_SELECTOR, 'tr')[j+1].find_element(By.CSS_SELECTOR, 'a').send_keys(Keys.ENTER)
             time.sleep(1)
+           # get Title
+            title = driver.find_element(By.XPATH, '/html/body/div/div[2]/form/table/tbody/tr[5]/td').text
             article_content = driver.find_element(By.XPATH, '/html/body/div/div[2]/form/table/tbody/tr[6]').get_attribute('innerHTML')
             article_content = article_content.replace("\'", "\'\'")
             attatchments = driver.find_elements(By.XPATH, '/html/body/div/div[2]/form/table/tbody/tr[7]')
@@ -172,7 +178,7 @@ for k in range(number_of_pages):#페이지 순회하며 탐색
                 attatchments = attatchments.replace("\'", "\'\'")
                 article_content = article_content + "\n" + attatchments
                 
-            cur.execute(f"insert into notice (id, title, content, writer, date, view, url) values ({article_id}, '{onearticle_datas[1]}', '{article_content}', '{onearticle_datas[2]}', '{onearticle_datas[3]}', {onearticle_datas[4]}, -1);")
+            cur.execute(f"insert into notice (id, title, content, writer, date, view, url) values ({title}, '{onearticle_datas[1]}', '{article_content}', '{onearticle_datas[2]}', '{onearticle_datas[3]}', {onearticle_datas[4]}, -1);")
             conn.commit()
             time.sleep(0.5)
             driver.find_element(By.XPATH, '/html/body/div/div[2]/div/input[3]').send_keys(Keys.ENTER)
