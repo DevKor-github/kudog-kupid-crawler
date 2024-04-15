@@ -70,6 +70,7 @@ except:#쿠키 만료시(접속 불가 시) 수동 로그인으로 쿠키 갱신
     pw_box.send_keys(PASS)
     login_button.click()
     time.sleep(20)
+    print(driver.find_element(By.XPATH, '//*[@id="header"]/div[2]/div/div/ul/li[6]').get_attribute('innerHTML'))
     notice_button = driver.find_element(By.XPATH, '//*[@id="header"]/div[2]/div/div/ul/li[6]/a')
     notice_button.click()
     time.sleep(3)
