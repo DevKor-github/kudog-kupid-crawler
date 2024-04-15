@@ -53,7 +53,6 @@ driver = webdriver.Chrome(options = options)
 
 driver.get(url)
 
-print (driver.page_source)
 #맨 처음 기동 시 url 즉시 접속 가능하게 하는 쿠키 저장 필요.
 #try-except로 쿠키 만료 및 에러 확인. 에러 발생 시 쿠키 재저장
 #모든 글에 접속하면 굉장히 느려지기에 html로 사전 검사 후 새로운 글들만 접근
@@ -67,18 +66,21 @@ try:#쿠키로 로그인 과정 생략
     
 except:#쿠키 만료시(접속 불가 시) 수동 로그인으로 쿠키 갱신 및 저장
     login_box = driver.find_element(By.XPATH, '//*[@id="oneid"]')
-    print(login_box.get_attribute('innerHTML'))
+    
     pw_box = driver.find_element(By.XPATH, '//*[@id="_pw"]')
     login_button = driver.find_element(By.XPATH, '//*[@id="loginsubmit"]')
+
+    print(driver.find_element(By.XPATH, '//*[@id="dd954b1ce9feab720bbb046cc2483c41c7fe9c55811c41f56d1ec72df6ba4893"]'))
+
     USER = os.getenv("KUPID_ID")
     PASS = os.getenv("KUPID_PASSWORD")
     login_box.send_keys(USER)
     pw_box.send_keys(PASS)
     login_button.click()
     time.sleep(5)
-    print (driver.page_source)
+    #print (driver.page_source)
 
-    print(driver.find_element(By.XPATH, '//*[@id="header"]').get_attribute('innerHTML'))
+    #print(driver.find_element(By.XPATH, '//*[@id="header"]').get_attribute('innerHTML'))
     print('-------------------')
     notice_button = driver.find_element(By.XPATH, '//*[@id="header"]/div[2]/div/div/ul/li[6]/a')
     notice_button.click()
