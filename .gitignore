@@ -1,0 +1,4 @@
+.env
+/kupid-kudog/
+kupid_cookies.pkl
+/__pycache__/
