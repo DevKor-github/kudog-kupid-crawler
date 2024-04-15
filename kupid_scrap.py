@@ -75,7 +75,7 @@ except:#쿠키 만료시(접속 불가 시) 수동 로그인으로 쿠키 갱신
     login_box.send_keys(USER)
     pw_box.send_keys(PASS)
     login_button.click()
-    time.sleep(5)
+    time.sleep(60)
     #print (driver.page_source)
 
     #print(driver.find_element(By.XPATH, '//*[@id="header"]').get_attribute('innerHTML'))
