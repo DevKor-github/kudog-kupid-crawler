@@ -39,6 +39,9 @@ options.add_argument(f'user-agent={user_agent}')
 conn = psycopg2.connect(host=os.getenv("DB_HOST"), dbname=os.getenv("DB_DATABASE"), user=os.getenv("DB_USERNAME"), password=os.getenv("DB_PASSWORD"), port=os.getenv("DB_PORT"))
 cur = conn.cursor()
 
+# notice ids for notification
+ids =[]
+
 #일반 공지사항/장학금 공지사항/학사일정 알림 url
 url = 'https://grw.korea.ac.kr/GroupWare/user/NoticeList.jsp?kind='
 notice_list = ['11', '88', '89']#각각 일반공지, 장학금공지, 학사일정공지
@@ -125,6 +128,7 @@ for i in range(2):
                     attatchments = attatchments.replace("\'", "\'\'")
                     article_content = article_content + "\n" + attatchments
                 #여기도 가독성 개선해볼 것...
+                ids.append(article_id)
                 cur.execute(f"insert into notice (id, title, content, writer, date, view, url, \"categoryId\") values ({article_id}, '{title}', '{article_content}', '{onearticle_datas[2]}', '{onearticle_datas[3]}', {onearticle_datas[4]}, -1, {i + 23});")
                 conn.commit()
                 time.sleep(0.5)
@@ -178,6 +182,7 @@ for k in range(number_of_pages):#페이지 순회하며 탐색
                 attatchments = attatchments.replace("\'", "\'\'")
                 article_content = article_content + "\n" + attatchments
                 
+            ids.append(article_id)
             cur.execute(f"insert into notice (id, title, content, writer, date, view, url, \"categoryId\") values ({article_id}, '{title}', '{article_content}', '{onearticle_datas[2]}', '{onearticle_datas[3]}', {onearticle_datas[4]}, -1, {25});")
             conn.commit()
             time.sleep(0.5)
@@ -195,5 +200,8 @@ os.system("taskkill /f /im chromedriver.exe /t")#크롬드라이버가 끝나도
 cur.close()
 conn.close()#sql 종료
 
+requests.post('http://localhost:3050/notifications/kupid-crawler-notification', json={"ids": []}, headers={
+    'Authorization': 'Bearer ' + os.getenv("PY_TOKEN")
+})
 
 #추후 개선 사항: 가독성 개선, time.sleep대신 implicit/explicit wait으로 코드 속도 향
