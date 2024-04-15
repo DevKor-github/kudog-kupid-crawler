@@ -64,6 +64,7 @@ try:#쿠키로 로그인 과정 생략
     
 except:#쿠키 만료시(접속 불가 시) 수동 로그인으로 쿠키 갱신 및 저장
     login_box = driver.find_element(By.XPATH, '//*[@id="oneid"]')
+    print(login_box.get_attribute('innerHTML'))
     pw_box = driver.find_element(By.XPATH, '//*[@id="_pw"]')
     login_button = driver.find_element(By.XPATH, '//*[@id="loginsubmit"]')
     USER = os.getenv("KUPID_ID")
@@ -73,6 +74,7 @@ except:#쿠키 만료시(접속 불가 시) 수동 로그인으로 쿠키 갱신
     login_button.click()
     time.sleep(5)
     print(driver.find_element(By.XPATH, '//*[@id="header"]').get_attribute('innerHTML'))
+    print('-------------------')
     notice_button = driver.find_element(By.XPATH, '//*[@id="header"]/div[2]/div/div/ul/li[6]/a')
     notice_button.click()
     time.sleep(3)
