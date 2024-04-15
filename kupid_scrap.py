@@ -70,8 +70,6 @@ except:#쿠키 만료시(접속 불가 시) 수동 로그인으로 쿠키 갱신
     pw_box = driver.find_element(By.XPATH, '//*[@id="_pw"]')
     login_button = driver.find_element(By.XPATH, '//*[@id="loginsubmit"]')
 
-    print(driver.find_element(By.XPATH, '//*[@id="dd954b1ce9feab720bbb046cc2483c41c7fe9c55811c41f56d1ec72df6ba4893"]'))
-
     USER = os.getenv("KUPID_ID")
     PASS = os.getenv("KUPID_PASSWORD")
     login_box.send_keys(USER)
