@@ -26,6 +26,8 @@ options.add_experimental_option("prefs", {'profile.managed_default_content_setti
 options.add_argument('--blink-settings=imagesEnabled=false')
 
 options.add_argument('--headless') 
+options.add_argument("--disable-infobars")
+
 options.add_argument('--ignore-ssl-errors=yes')
 options.add_argument('--ignore-certificate-errors')
 options.add_argument('--disable-dev-shm-usage')
@@ -51,6 +53,7 @@ driver = webdriver.Chrome(options = options)
 
 driver.get(url)
 
+print (driver.page_source)
 #맨 처음 기동 시 url 즉시 접속 가능하게 하는 쿠키 저장 필요.
 #try-except로 쿠키 만료 및 에러 확인. 에러 발생 시 쿠키 재저장
 #모든 글에 접속하면 굉장히 느려지기에 html로 사전 검사 후 새로운 글들만 접근
