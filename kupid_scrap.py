@@ -200,7 +200,7 @@ os.system("taskkill /f /im chromedriver.exe /t")#크롬드라이버가 끝나도
 cur.close()
 conn.close()#sql 종료
 
-requests.post('http://localhost:3050/notifications/kupid-crawler-notification', json={"ids": []}, headers={
+requests.post('http://localhost:3050/notifications/kupid-crawler-notification', json={"ids": ids}, headers={
     'Authorization': 'Bearer ' + os.getenv("PY_TOKEN")
 })
 
