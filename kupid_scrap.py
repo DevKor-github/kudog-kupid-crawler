@@ -1,6 +1,7 @@
 #크롬 기반으로 돌아가는 코드이기에 크롬이 깔려 있어야 함.
 #만약 크롬을 깔기 어려운 환경이라면 해당 컴퓨터에 있는 인터넷 드라이버로 변경 가능
 #설치 필요 파이썬 모듈: beautifulsoup4(bs4), requests, selenium, psycopg2, python-dotenv
+import time
 from bs4 import BeautifulSoup
 import requests
 from selenium import webdriver
@@ -139,7 +140,7 @@ for i in range(2):
                     article_content = article_content + "\n" + attatchments
                 #여기도 가독성 개선해볼 것...
                 ids.append(article_id)
-                cur.execute(f"insert into notice (id, title, content, writer, date, view, url, \"categoryId\") values ({article_id}, '{title}', '{article_content}', '{onearticle_datas[2]}', '{onearticle_datas[3]}', {onearticle_datas[4]}, -1, {i + 23});")
+                cur.execute(f"insert into notice (id, title, content, writer, date, view, url, \"categoryId\", \"createdAt\") values ({article_id}, '{title}', '{article_content}', '{onearticle_datas[2]}', '{onearticle_datas[3]}', {onearticle_datas[4]}, -1, {i + 23}, {int(time.time())});")
                 conn.commit()
                 time.sleep(0.5)
                 driver.find_element(By.XPATH, '/html/body/div/div[2]/div/input[3]').send_keys(Keys.ENTER)
@@ -193,7 +194,7 @@ for k in range(number_of_pages):#페이지 순회하며 탐색
                 article_content = article_content + "\n" + attatchments
                 
             ids.append(article_id)
-            cur.execute(f"insert into notice (id, title, content, writer, date, view, url, \"categoryId\") values ({article_id}, '{title}', '{article_content}', '{onearticle_datas[2]}', '{onearticle_datas[3]}', {onearticle_datas[4]}, -1, {25});")
+            cur.execute(f"insert into notice (id, title, content, writer, date, view, url, \"categoryId\", \"createdAt\") values ({article_id}, '{title}', '{article_content}', '{onearticle_datas[2]}', '{onearticle_datas[3]}', {onearticle_datas[4]}, -1, {25}, {int(time.time())});")
             conn.commit()
             time.sleep(0.5)
             driver.find_element(By.XPATH, '/html/body/div/div[2]/div/input[3]').send_keys(Keys.ENTER)
